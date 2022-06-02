@@ -21,8 +21,11 @@ export default function Signup() {
       <View style={styles.inputContainer}>
         <Input placeholder="Full name" />
         <Input placeholder="Email Address" />
-        <Input placeholder="Age" />
         <Input placeholder="Password" secureTextEntry />
+        <Input placeholder="Age" />
+        <View style={{ marginVertical: 10 }}>
+          <Text>Select Gender</Text>
+        </View>
         {genderOptions.map((option) => {
           const selected = option === gender;
           return (
@@ -48,20 +51,6 @@ export default function Signup() {
             </Pressable>
           );
         })}
-
-        {/* <Pressable style={styles.radioContainer}>
-          <View
-            style={[styles.outerCircle, selected && styles.selectedOuterCircle]}
-          >
-            <View
-              style={[
-                styles.innerCircle,
-                selected && styles.selectedInnerCircle,
-              ]}
-            />
-          </View>
-          <Text style={styles.radioText}>Female</Text>
-        </Pressable> */}
       </View>
 
       <View style={styles.pressableContainer}>
@@ -108,10 +97,10 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingBottom: 20,
   },
   pressableContainer: {
-    flex: 1,
+    // flex: 1,
     // justifyContent: "flex-end",
     justifyContent: "center",
     alignItems: "center",
