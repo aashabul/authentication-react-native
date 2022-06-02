@@ -12,7 +12,8 @@ export default function Button({ title, onPress, customStyles }) {
 const styles = StyleSheet.create({
   button: {
     borderRadius: 30,
-    width: 165,
+    paddingLeft: 40,
+    paddingRight: 40,
     height: 45,
     backgroundColor: "#FFE600",
     justifyContent: "center",
