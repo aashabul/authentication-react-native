@@ -1,10 +1,13 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import React from "react";
+import SafeViewAndroid from "../theme/globalStyle";
 
 export default function Signin() {
   return (
-    <View>
-      <Text>Signin Screen</Text>
-    </View>
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+      <View>
+        <Text>Signin Screen</Text>
+      </View>
+    </SafeAreaView>
   );
 }
