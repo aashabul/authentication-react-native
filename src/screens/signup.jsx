@@ -11,18 +11,38 @@ import React, { useState } from "react";
 import SafeViewAndroid from "../theme/globalStyle";
 import Button from "../components/button";
 import Input from "../components/input";
+import { auth } from "../firebase/firebaseConfig";
 
 const genderOptions = ["Male", "Female"];
 
 export default function Signup() {
   const [gender, setGender] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [userName, setUserName] = useState("");
+
+  const signup = () => {
+    auth.createUserWithEmailAndPassword();
+  };
+
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, styles.container]}>
       <View style={styles.inputContainer}>
-        <Input placeholder="Full name" />
-        <Input placeholder="Email Address" />
-        <Input placeholder="Password" secureTextEntry />
-        <Input placeholder="Age" />
+        <Input
+          placeholder="Full name"
+          onChangeText={(text) => setUserName(text)}
+        />
+        <Input
+          placeholder="Email Address"
+          onChangeText={(text) => setEmail(text)}
+        />
+        <Input
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={(text) => setPassword(text)}
+        />
+        <Input placeholder="Age" onChangeText={(text) => setAge(text)} />
         <View style={{ marginVertical: 10 }}>
           <Text>Select Gender</Text>
         </View>
@@ -59,9 +79,9 @@ export default function Signup() {
           customStyles={{ alignSelf: "center", marginBottom: 60 }}
         />
         <Pressable
-        // onPress={() => {
-        //   navigation.navigate("Signin");
-        // }}
+          onPress={() => {
+            signup;
+          }}
         >
           <Text>
             Already have an account?{" "}
