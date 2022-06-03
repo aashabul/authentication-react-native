@@ -23,7 +23,19 @@ export default function Signup() {
   const [userName, setUserName] = useState("");
 
   const signup = () => {
-    auth.createUserWithEmailAndPassword();
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log("User Created!", user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
 
   return (
@@ -77,12 +89,9 @@ export default function Signup() {
         <Button
           title={"Sign up"}
           customStyles={{ alignSelf: "center", marginBottom: 60 }}
+          onPress={signup}
         />
-        <Pressable
-          onPress={() => {
-            signup;
-          }}
-        >
+        <Pressable>
           <Text>
             Already have an account?{" "}
             <Text
