@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import SafeViewAndroid from "../theme/globalStyle";
 import Button from "../components/button";
 import Input from "../components/input";
-import { auth } from "../firebase/firebaseConfig";
+import { auth } from "../firebase/firebase.config";
 
 const genderOptions = ["Male", "Female"];
 
@@ -22,8 +22,8 @@ export default function Signup() {
   const [age, setAge] = useState("");
   const [userName, setUserName] = useState("");
 
-  const signup = () => {
-    auth
+  const signup = async () => {
+    const result = await auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         // Signed in
@@ -32,8 +32,13 @@ export default function Signup() {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        if (email == "" || password == "") {
+          alert("Please fillup all the fields");
+        } else {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        }
         // ..
       });
   };
