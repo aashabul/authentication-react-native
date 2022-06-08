@@ -23,8 +23,10 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const signup = async () => {
+    setLoading(true);
     try {
       //create user with email and password
       const result = await createUserWithEmailAndPassword(
@@ -40,20 +42,27 @@ export default function Signup() {
         gender: gender,
         uid: result.user.uid,
       });
+      setLoading(false);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage);
+      setLoading(false);
     }
   };
 
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, styles.container]}>
       <View style={styles.inputContainer}>
-        <Input placeholder="Full name" onChangeText={(text) => setName(text)} />
+        <Input
+          placeholder="Full name"
+          onChangeText={(text) => setName(text)}
+          autoCapitalize={"words"}
+        />
         <Input
           placeholder="Email Address"
           onChangeText={(text) => setEmail(text)}
+          autoCapitalize={"none"}
         />
         <Input
           placeholder="Password"

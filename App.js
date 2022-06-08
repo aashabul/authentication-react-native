@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/home";
@@ -8,7 +8,7 @@ import Signin from "./src/screens/signin";
 import Signup from "./src/screens/signup";
 import Edit from "./src/screens/edit";
 import Create from "./src/screens/create";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./src/firebase/firebase.config";
 
 const AppTheme = {
@@ -23,17 +23,31 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   signOut(auth);
+  // }, []);
 
   useEffect(() => {
     const authSubscription = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
     return authSubscription;
   }, []);
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator color="blue" size="large" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer theme={AppTheme}>
