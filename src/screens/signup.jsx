@@ -11,7 +11,9 @@ import React, { useState } from "react";
 import SafeViewAndroid from "../theme/globalStyle";
 import Button from "../components/button";
 import Input from "../components/input";
-import { auth } from "../firebase/firebase.config";
+import { auth, db } from "../firebase/firebase.config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 const genderOptions = ["Male", "Female"];
 
@@ -20,36 +22,35 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [age, setAge] = useState("");
-  const [userName, setUserName] = useState("");
+  const [name, setName] = useState("");
 
   const signup = async () => {
-    const result = await auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log("User Created!", user);
-        // ...
-      })
-      .catch((error) => {
-        if (email == "" || password == "") {
-          alert("Please fillup all the fields");
-        } else {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert(errorMessage);
-        }
-        // ..
+    try {
+      //create user with email and password
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      //add user profile to database
+      await addDoc(collection(db, "users"), {
+        name: name,
+        email: email,
+        age: age,
+        gender: gender,
+        uid: result.user.uid,
       });
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    }
   };
 
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, styles.container]}>
       <View style={styles.inputContainer}>
-        <Input
-          placeholder="Full name"
-          onChangeText={(text) => setUserName(text)}
-        />
+        <Input placeholder="Full name" onChangeText={(text) => setName(text)} />
         <Input
           placeholder="Email Address"
           onChangeText={(text) => setEmail(text)}
