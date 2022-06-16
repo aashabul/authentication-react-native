@@ -10,6 +10,7 @@ import Edit from "./src/screens/edit";
 import Create from "./src/screens/create";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./src/firebase/firebase.config";
+import FlashMessage from "react-native-flash-message";
 
 const AppTheme = {
   ...DefaultTheme,
@@ -50,30 +51,33 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer theme={AppTheme}>
-      <Stack.Navigator>
-        {user ? (
-          <>
-            <Stack.Screen name="Home" options={{ headerShown: false }}>
-              {(props) => <Home {...props} user={user} />}
-            </Stack.Screen>
-            <Stack.Screen name="Create">
-              {(props) => <Create {...props} user={user} />}
-            </Stack.Screen>
-            <Stack.Screen name="Edit" component={Edit} />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Signin"
-              component={Signin}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="Signup" component={Signup} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer theme={AppTheme}>
+        <Stack.Navigator>
+          {user ? (
+            <>
+              <Stack.Screen name="Home" options={{ headerShown: false }}>
+                {(props) => <Home {...props} user={user} />}
+              </Stack.Screen>
+              <Stack.Screen name="Create">
+                {(props) => <Create {...props} user={user} />}
+              </Stack.Screen>
+              <Stack.Screen name="Edit" component={Edit} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen
+                name="Signin"
+                component={Signin}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="Signup" component={Signup} />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+      <FlashMessage position="top" />
+    </>
   );
 }
 

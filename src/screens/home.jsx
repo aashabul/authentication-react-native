@@ -23,6 +23,9 @@ const Item = ({ title, color, description }) => (
     }}
   >
     <Text style={{ fontSize: 24, color: "white" }}>{title}</Text>
+    <Text style={{ fontSize: 18, color: "white", marginTop: 6 }}>
+      {description}
+    </Text>
   </Pressable>
 );
 

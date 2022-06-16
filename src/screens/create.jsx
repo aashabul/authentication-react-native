@@ -13,6 +13,8 @@ import Button from "../components/button";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 
+import { showMessage } from "react-native-flash-message";
+
 const noteColorOptions = ["red", "blue", "green"];
 
 export default function Create({ navigation, route, user }) {
@@ -31,6 +33,11 @@ export default function Create({ navigation, route, user }) {
         uid: user.uid,
       });
       setLoading(false);
+      showMessage({
+        message: "Note created successfully",
+        type: "success",
+      });
+      navigation.goBack();
     } catch (error) {
       console.log(error);
     }
