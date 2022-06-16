@@ -55,11 +55,6 @@ export default function Signup() {
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, styles.container]}>
       <View style={styles.inputContainer}>
         <Input
-          placeholder="Full name"
-          onChangeText={(text) => setName(text)}
-          autoCapitalize={"words"}
-        />
-        <Input
           placeholder="Email Address"
           onChangeText={(text) => setEmail(text)}
           autoCapitalize={"none"}
@@ -68,6 +63,11 @@ export default function Signup() {
           placeholder="Password"
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
+        />
+        <Input
+          placeholder="Full name"
+          onChangeText={(text) => setName(text)}
+          autoCapitalize={"words"}
         />
         <Input placeholder="Age" onChangeText={(text) => setAge(text)} />
         <View style={{ marginVertical: 10 }}>
