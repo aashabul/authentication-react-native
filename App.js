@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/screens/home";
 import Signin from "./src/screens/signin";
 import Signup from "./src/screens/signup";
-import Edit from "./src/screens/edit";
+import Update from "./src/screens/update";
 import Create from "./src/screens/create";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./src/firebase/firebase.config";
@@ -62,7 +62,7 @@ export default function App() {
               <Stack.Screen name="Create">
                 {(props) => <Create {...props} user={user} />}
               </Stack.Screen>
-              <Stack.Screen name="Edit" component={Edit} />
+              <Stack.Screen name="Update" component={Update} />
             </>
           ) : (
             <>

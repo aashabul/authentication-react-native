@@ -7,6 +7,7 @@ export default function Input({
   onChangeText,
   autoCapitalize,
   multiline,
+  value,
 }) {
   return (
     <View>
@@ -17,6 +18,7 @@ export default function Input({
         onChangeText={onChangeText}
         autoCapitalize={autoCapitalize}
         multiline={multiline}
+        value={value}
       />
     </View>
   );

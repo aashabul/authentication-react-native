@@ -13,25 +13,28 @@ import { AntDesign } from "@expo/vector-icons";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/firebase.config";
 
-const Item = ({ title, color, description }) => (
-  <Pressable
-    style={{
-      backgroundColor: color,
-      marginBottom: 25,
-      borderRadius: 16,
-      padding: 15,
-    }}
-  >
-    <Text style={{ fontSize: 24, color: "white" }}>{title}</Text>
-    <Text style={{ fontSize: 18, color: "white", marginTop: 6 }}>
-      {description}
-    </Text>
-  </Pressable>
-);
-
 export default function Home({ navigation, route, user }) {
   // console.log("user-->", user);
   const [notes, setNotes] = useState([]);
+
+  const Item = ({ title, color, description }) => (
+    <Pressable
+      style={{
+        backgroundColor: color,
+        marginBottom: 25,
+        borderRadius: 16,
+        padding: 15,
+      }}
+      onPress={() => {
+        navigation.navigate("Update", { title, description, color });
+      }}
+    >
+      <Text style={{ fontSize: 24, color: "white" }}>{title}</Text>
+      <Text style={{ fontSize: 18, color: "white", marginTop: 6 }}>
+        {description}
+      </Text>
+    </Pressable>
+  );
 
   //fetch notes collection
   useEffect(() => {
