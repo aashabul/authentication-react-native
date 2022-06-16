@@ -1,8 +1,17 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import React, { useState } from "react";
 import SafeViewAndroid from "../theme/globalStyle";
 import Input from "../components/input";
 import RadioInput from "../components/radio-input";
+import Button from "../components/button";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/firebase.config";
 
 const noteColorOptions = ["red", "blue", "green"];
 
@@ -10,6 +19,23 @@ export default function Create({ navigation, route, user }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [noteColor, setNoteColor] = useState("blue");
+  const [loading, setLoading] = useState(false);
+
+  const onPressCreate = async () => {
+    setLoading(true);
+    try {
+      const docRef = await addDoc(collection(db, "notes"), {
+        title: title,
+        description: description,
+        color: noteColor,
+        uid: user.uid,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, styles.container]}>
       <Input placeholder={"Title"} onChangeText={(text) => setTitle(text)} />
@@ -29,6 +55,15 @@ export default function Create({ navigation, route, user }) {
           setValue={setNoteColor}
         />
       ))}
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Button
+          title="Submit"
+          customStyles={{ marginTop: 60, alignSelf: "center", width: "100%" }}
+          onPress={onPressCreate}
+        />
+      )}
     </SafeAreaView>
   );
 }
